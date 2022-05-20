@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyManager : Singleten<EnemyManager>
 {
+    public int WaveNumber => waveNumber;
+    public float TimeBetweenWaves => timeBetweenWaves;
+
+    [SerializeField] GameObject waveUI;
+
     [SerializeField] bool isSpawnEnemy = true;
 
     [SerializeField] GameObject[] enemyPrefabs;
@@ -56,7 +61,13 @@ public class EnemyManager : Singleten<EnemyManager>
         while (isSpawnEnemy)
         {
             yield return waitUntilNoEnemy;  //当场景中还有敌人时（ enemyList.Count == 0 返回为false时）挂起等待， 反之执行下面的代码
+
+            waveUI.SetActive(true);     //当场景中没有敌人时，将waveUI启用
+
             yield return waitTimeBetweenWaves;  //在下一波敌人生成之前挂起等待一段时间
+
+            waveUI.SetActive(false);    //当场景中即将刷新敌人时，将waveUI禁用
+
             yield return StartCoroutine(nameof(RandomlySpawnCoroutine));
         }
        
