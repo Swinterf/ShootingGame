@@ -188,7 +188,7 @@ public class Player : Character
         //moveCoroutine = StartCoroutine(MoveCoroutine(accelerationTime, moveInput.normalized * moveSpeed, moveRotation));
         moveCoroutine = StartCoroutine(MoveCoroutine(accelerationTime, moveInput.normalized * moveSpeed,
             Quaternion.AngleAxis(moveRotationAngle * moveInput.y, Vector3.right)));
-        StartCoroutine(MovePositionLimitedCoroutine());
+        StartCoroutine(nameof(MovePositionLimitedCoroutine));
     }
 
     private void StopMove()
@@ -199,6 +199,7 @@ public class Player : Character
         }
         /*rigidbody.velocity = Vector2.zero;*/
         moveCoroutine = StartCoroutine(MoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
+        StopCoroutine(nameof(MovePositionLimitedCoroutine));
     }
 
 
