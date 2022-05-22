@@ -6,6 +6,8 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject hitVFX;
 
+    [SerializeField] AudioData[] hitSFXs;
+
     [SerializeField] float damage = 1f;
 
     [SerializeField] float moveSpeed = 10f;
@@ -42,6 +44,7 @@ public class Projectile : MonoBehaviour
             PoolManager.Release(hitVFX,
                 collision.GetContact(0).point,
                 Quaternion.LookRotation(collision.GetContact(0).normal));
+            AudioManager.Instance.PlayRandomSFX(hitSFXs);   //播放命中音效
 
             //命中目标后将子弹禁用回到对象池中准备再次被启动
             gameObject.SetActive(false);

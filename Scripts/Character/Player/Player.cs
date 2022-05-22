@@ -54,8 +54,12 @@ public class Player : Character
 
     [SerializeField] float fireInterval;
 
+    [SerializeField] AudioData projectileLaunchSFX;
+
 
     [Header("---- DODGE ----")]
+
+    [SerializeField] AudioData dodgeSFX;
 
     [SerializeField,Range(0, 100)] int dodgeEneryCost = 25;
 
@@ -304,6 +308,8 @@ public class Player : Character
                 default:
                     break;
             }
+            AudioManager.Instance.PlayRandomSFX(projectileLaunchSFX);    //开火时播放开火音效
+
             /*yield return new WaitForSeconds(fireInterval);*///在循环内new 效率太过于底下 舍弃该方案
             yield return waitForFireInterval;
         }
@@ -322,6 +328,7 @@ public class Player : Character
     IEnumerator DodgeCoroutine()
     {
         isdodging = true;
+        AudioManager.Instance.PlayRandomSFX(dodgeSFX);  //播放闪避音效
         //消耗能量
         PlayerEnergy.Instance.Use(dodgeEneryCost);
 
