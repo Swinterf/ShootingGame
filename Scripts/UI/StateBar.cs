@@ -15,6 +15,8 @@ public class StateBar : MonoBehaviour
 
     float currentFillAmount;
     protected float targetFillAmount;
+    float previousFillAmount;
+
 
     Canvas canvas;
 
@@ -109,11 +111,13 @@ public class StateBar : MonoBehaviour
             yield return waitForDelayFill;
         }
 
+        previousFillAmount = currentFillAmount;
+
         t = 0f;
         while (t < 1f)
         {
             t += Time.fixedDeltaTime * fillSpeed;
-            currentFillAmount = Mathf.Lerp(currentFillAmount, targetFillAmount, t);
+            currentFillAmount = Mathf.Lerp(previousFillAmount, targetFillAmount, t);
             image.fillAmount = currentFillAmount;
 
             yield return null;

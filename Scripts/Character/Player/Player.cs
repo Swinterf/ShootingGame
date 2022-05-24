@@ -76,6 +76,12 @@ public class Player : Character
     float dodgeDuration;
     float currentRoll;
 
+    float t;
+
+    Vector2 previousVelocity;
+
+    Quaternion previousRotation;
+
     WaitForSeconds waitForFireInterval;
     WaitForSeconds waitRegenerateHealthTime;
 
@@ -215,19 +221,21 @@ public class Player : Character
     /// <returns></returns>
     IEnumerator MoveCoroutine(float time, Vector2 moveVelocity, Quaternion moveRotation)
     {
-        float t = 0;
+        t = 0;
+        previousVelocity = rigidbody.velocity;
+        previousRotation = transform.localRotation;
 
         /* 两种实现加速减速效果的写法 */
         while (t < 1f)
         {
             t += Time.fixedDeltaTime / time;
             //实现Player 移动时加速运动
-            rigidbody.velocity = Vector2.Lerp(rigidbody.velocity, moveVelocity, t);
+            rigidbody.velocity = Vector2.Lerp(previousVelocity, moveVelocity, t);
 
             //实现Player 移动时绕x轴旋转
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, moveRotation, t);
+            transform.localRotation = Quaternion.Lerp(previousRotation, moveRotation, t);
 
-            yield return null;
+            yield return new WaitForFixedUpdate();  //由于使用了Time.fixedDeltaTime 则挂起等待的时间也应该是固定下一帧的更新
         }
 
         //while (t < time)
