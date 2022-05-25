@@ -22,6 +22,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float minFireInterval = 0.1f;
     [SerializeField] float maxFireInterval = 0.5f;
 
+    float maxFramDistance;
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    private void Awake()
+    {
+        maxFramDistance = moveSpeed * Time.fixedDeltaTime;
+    }
 
     private void OnEnable()
     {
@@ -47,10 +54,10 @@ public class EnemyController : MonoBehaviour
         while (gameObject.activeSelf)
         {
             // if not arrive targetPosition 
-            if (Vector3.Distance(transform.position, targetPosition) > Mathf.Epsilon) 
+            if (Vector3.Distance(transform.position, targetPosition) >= maxFramDistance) 
             {
                 //keep moving targetPosition
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
 
                 //make enemy rotation with X axis while moving
                 transform.rotation = Quaternion.AngleAxis(
@@ -63,7 +70,7 @@ public class EnemyController : MonoBehaviour
                 targetPosition = Viewport.Instance.RandomEnemyHalfRightPosition(paddingX, paddingY);
             }
 
-            yield return null;
+            yield return waitForFixedUpdate;
 
         }
     }
