@@ -41,6 +41,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Overdrive"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc37cbb7-ec87-4d49-ae3e-0c9c640d20ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -186,6 +194,39 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a60c4b23-46b1-4665-81a4-f32cc33c7fc7"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Overdrive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdcf4d4d-f44e-4b07-97ef-c2bba2cdde7c"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Overdrive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61ad71a6-3f08-46ef-ad49-0be7fc3965dc"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Overdrive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -219,6 +260,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
         m_GamePlay_Fire = m_GamePlay.FindAction("Fire", throwIfNotFound: true);
         m_GamePlay_Dodge = m_GamePlay.FindAction("Dodge", throwIfNotFound: true);
+        m_GamePlay_Overdrive = m_GamePlay.FindAction("Overdrive", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -271,6 +313,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Move;
     private readonly InputAction m_GamePlay_Fire;
     private readonly InputAction m_GamePlay_Dodge;
+    private readonly InputAction m_GamePlay_Overdrive;
     public struct GamePlayActions
     {
         private @InputActions m_Wrapper;
@@ -278,6 +321,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_GamePlay_Move;
         public InputAction @Fire => m_Wrapper.m_GamePlay_Fire;
         public InputAction @Dodge => m_Wrapper.m_GamePlay_Dodge;
+        public InputAction @Overdrive => m_Wrapper.m_GamePlay_Overdrive;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -296,6 +340,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Dodge.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
+                @Overdrive.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnOverdrive;
+                @Overdrive.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnOverdrive;
+                @Overdrive.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnOverdrive;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -309,6 +356,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @Overdrive.started += instance.OnOverdrive;
+                @Overdrive.performed += instance.OnOverdrive;
+                @Overdrive.canceled += instance.OnOverdrive;
             }
         }
     }
@@ -327,5 +377,6 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnOverdrive(InputAction.CallbackContext context);
     }
 }

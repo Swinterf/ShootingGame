@@ -14,6 +14,8 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
     public event UnityAction onStopFire = delegate { };
 
     public event UnityAction onDodge = delegate { };
+
+    public event UnityAction onOverdrive = delegate { };
     //public event UnityAction onStopDodge = delegate { };
 
     InputActions inputActions;
@@ -92,6 +94,9 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
 
     public void OnOverdrive(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (context.performed)
+        {
+            onOverdrive.Invoke();
+        }
     }
 }

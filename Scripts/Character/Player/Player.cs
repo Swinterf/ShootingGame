@@ -71,7 +71,16 @@ public class Player : Character
     /// </summary>
     [SerializeField] Vector3 dodgeScale = new Vector3(0.5f, 0.5f, 0.5f);
 
+
+    [Header("---- OVERDRIVE ----")]
+
+    [SerializeField] int overdriveDodgeFactor = 2;
+
+    [SerializeField] float overdriveSpeedFactor = 1.2f;
+    [SerializeField] float overdriveFireFactor = 1.2f;
+
     bool isdodging = false;
+    bool isOverdriving = false;
 
     float dodgeDuration;
     float currentRoll;
@@ -84,6 +93,7 @@ public class Player : Character
 
     WaitForSeconds waitForFireInterval;
     WaitForSeconds waitRegenerateHealthTime;
+    WaitForSeconds waitForOverdriveFireInterval;
 
     Coroutine moveCoroutine;
     Coroutine healthRegenerateCoroutine;
@@ -94,6 +104,10 @@ public class Player : Character
 
     private void Awake()
     {
+        waitForOverdriveFireInterval = new WaitForSeconds(fireInterval / overdriveFireFactor);
+        waitForFireInterval = new WaitForSeconds(fireInterval);
+        waitRegenerateHealthTime = new WaitForSeconds(healthRegenerateTime);
+
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
 
@@ -111,6 +125,11 @@ public class Player : Character
         input.onStopFire += StopFire;
 
         input.onDodge += Dodge;
+
+        input.onOverdrive += Overdrive;
+
+        PlayerOverdive.on += OverdriveOn;
+        PlayerOverdive.off += OverdriveOff;
     }
 
     private void OnDisable()
@@ -122,12 +141,16 @@ public class Player : Character
         input.onStopFire -= StopFire;
 
         input.onDodge -= Dodge;
+
+        input.onOverdrive -= Overdrive;
+
+        PlayerOverdive.on -= OverdriveOn;
+        PlayerOverdive.off -= OverdriveOff;
     }
 
     private void Start()
     {
-        waitForFireInterval = new WaitForSeconds(fireInterval);
-        waitRegenerateHealthTime = new WaitForSeconds(healthRegenerateTime);
+        
 
         rigidbody.gravityScale = 0f;
 
@@ -319,7 +342,8 @@ public class Player : Character
             AudioManager.Instance.PlayRandomSFX(projectileLaunchSFX);    //开火时播放开火音效
 
             /*yield return new WaitForSeconds(fireInterval);*///在循环内new 效率太过于底下 舍弃该方案
-            yield return waitForFireInterval;
+
+            yield return isOverdriving ? waitForOverdriveFireInterval : waitForFireInterval;
         }
     }
     #endregion
@@ -412,6 +436,31 @@ public class Player : Character
         isdodging = false;
         
     }
+    #endregion
+
+    #region OVERDRIVE
+    private void Overdrive()
+    {
+        if (!PlayerEnergy.Instance.isEnough(PlayerEnergy.MAX)) return;
+
+        PlayerOverdive.on.Invoke();
+    }
+
+    private void OverdriveOn()
+    {
+        isOverdriving = true;
+        dodgeEneryCost *= overdriveDodgeFactor;
+        moveSpeed *= overdriveSpeedFactor;
+
+    }
+
+    private void OverdriveOff()
+    {
+        isOverdriving = false;
+        dodgeEneryCost /= overdriveDodgeFactor;
+        moveSpeed /= overdriveSpeedFactor;
+    }
+
     #endregion
 
 }
