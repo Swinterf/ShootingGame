@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Settings/Inputs/InputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/ShootingGameScripts/Settings/Inputs/InputActions.inputactions'
 
 using System;
 using System.Collections;
@@ -16,12 +16,12 @@ public class @InputActions : IInputActionCollection, IDisposable
     ""maps"": [
         {
             ""name"": ""GamePlay"",
-            ""id"": ""ff2db41f-2496-44e5-ac81-4ec7c90c8935"",
+            ""id"": ""6776e428-6f75-4138-8db7-5e56915dc5af"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""5499bf61-39b1-48b6-b60d-2968dbdf5129"",
+                    ""id"": ""91d2d528-61f2-4448-88cf-9d14ac9ef693"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -29,7 +29,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
-                    ""id"": ""4fbf1577-21dd-45fd-bec1-e5e36b386b2c"",
+                    ""id"": ""911c9da2-dfbc-41dc-a829-c9630d284d62"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -37,7 +37,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Dodge"",
                     ""type"": ""Button"",
-                    ""id"": ""114092a9-cfda-4471-8961-c098fb398bd8"",
+                    ""id"": ""f65d340c-2c50-4d40-8767-4ef45e94b532"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -46,29 +46,29 @@ public class @InputActions : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""1cd9e7fb-4b57-4960-bc81-6c84647864a5"",
+                    ""id"": ""01ac5257-e8fc-4087-816a-d20cc9ae2cc6"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""965f3b49-6777-45d1-a174-e2517d96e761"",
+                    ""id"": ""97d55066-8b5f-4906-a868-865d35a41ade"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""b79960e4-7c91-4c29-b4a6-5f7ead1d2d7f"",
+                    ""id"": ""93c71da9-7533-4222-88d1-174dd518a9d4"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -79,110 +79,110 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""54bd54aa-4f0a-46c5-9d95-36cc26427e61"",
+                    ""id"": ""bcb565e0-8161-4a4e-9691-bfcb96b5f56e"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""3f9d4870-9f8a-4244-b9bb-d00a964c37b3"",
+                    ""id"": ""3d339bcd-9d59-46f7-b0a8-f9f84b119920"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""3ccb0f19-843c-4015-b6de-216726c573e9"",
+                    ""id"": ""15d47670-c23c-4de4-8dd3-aa33dd0b3120"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""c7bccde2-bd8e-461f-8a72-656a8b5ee802"",
+                    ""id"": ""84cc7098-0864-4d84-b654-d2bde88ab9f4"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4fa2c3ec-b6f0-4cd9-9d9a-55c6eca28338"",
+                    ""id"": ""551b121c-5f7c-4ada-8649-ba25d1074526"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e9ca7948-e6a8-412b-90e7-2249e6cce964"",
-                    ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4bf889ec-3a90-4437-abbf-344fc5e80b8c"",
+                    ""id"": ""3fe37437-cb90-496a-ba4e-aa026ff0c0e5"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1e1f8fcf-bb3f-44b0-9aab-30cc062a207a"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""id"": ""7ca54b26-d5b7-45e2-98be-566cec8fbe72"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dodge"",
+                    ""groups"": ""PC"",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d50cb58d-4e9c-423d-89d7-c22ef5e6e3c1"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dodge"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2783c4ed-b225-4156-bb3d-e983d776931d"",
+                    ""id"": ""287ecb8b-6bf0-4274-8dfc-a26a7167a651"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fc4c8de-d09d-412a-84aa-e7ab73952f57"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dcfad17-e952-41f7-a06a-018077c5db6a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -201,12 +201,12 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isOR"": false
                 },
                 {
-                    ""devicePath"": ""<Mouse>"",
+                    ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 },
                 {
-                    ""devicePath"": ""<Keyboard>"",
+                    ""devicePath"": ""<Mouse>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
