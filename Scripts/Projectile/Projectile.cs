@@ -40,19 +40,19 @@ public class Projectile : MonoBehaviour
     private protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        //TryGetComponent<Character> ±ÈÆð GetCpmponent<Character> ÏûºÄµÄÐÔÄÜ¸üÉÙ
-        if (collision.gameObject.TryGetComponent<Character>(out Character character))   //µ±×Óµ¯ÃüÖÐÁËChara ÀàÊ±
+        //TryGetComponent<Character> ï¿½ï¿½ï¿½ï¿½ GetCpmponent<Character> ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½
+        if (collision.gameObject.TryGetComponent<Character>(out Character character))   //ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Chara ï¿½ï¿½Ê±
         {
             character.TakeDamage(damage);
 
-            //var contactPoint = collision.GetContact(0);     //ÓÃGetContact ·µ»ØÁ½ÕßÅö×²Ê±µÄÅö×²µã   ÆäÖÐÓÃGetContact(0)±íÊ¾µÚÒ»¸öÅö×²µã
+            //var contactPoint = collision.GetContact(0);     //ï¿½ï¿½GetContact ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²Ê±ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GetContact(0)ï¿½ï¿½Ê¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½
             //PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
             PoolManager.Release(hitVFX,
                 collision.GetContact(0).point,
                 Quaternion.LookRotation(collision.GetContact(0).normal));
-            AudioManager.Instance.PlayRandomSFX(hitSFXs);   //²¥·ÅÃüÖÐÒôÐ§
+            AudioManager.Instance.PlayRandomSFX(hitSFXs);   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
 
-            //ÃüÖÐÄ¿±êºó½«×Óµ¯½ûÓÃ»Øµ½¶ÔÏó³ØÖÐ×¼±¸ÔÙ´Î±»Æô¶¯
+            //ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ã»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½ï¿½Ù´Î±ï¿½ï¿½ï¿½ï¿½ï¿½
             gameObject.SetActive(false);
         }
     }
