@@ -25,11 +25,17 @@ public class Projectile : MonoBehaviour
     {
         while (gameObject.activeSelf)
         {
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
-
+            Move();
             yield return null;
         }
     }
+
+    public void Move()  => transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+
+    private protected void SetTarget(GameObject target) => this.target = target;
+    //{
+    //    this.target = target;
+    //}
 
     private protected virtual void OnCollisionEnter2D(Collision2D collision)
     {

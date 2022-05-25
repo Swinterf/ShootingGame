@@ -45,6 +45,7 @@ public class Player : Character
     [SerializeField] GameObject projectile1;
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject projectile3;
+    [SerializeField] GameObject projectileOverdrive;
 
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleTop;
@@ -94,6 +95,7 @@ public class Player : Character
     WaitForSeconds waitForFireInterval;
     WaitForSeconds waitRegenerateHealthTime;
     WaitForSeconds waitForOverdriveFireInterval;
+    WaitForSeconds waitDecelerationTime;
 
     Coroutine moveCoroutine;
     Coroutine healthRegenerateCoroutine;
@@ -107,6 +109,7 @@ public class Player : Character
         waitForOverdriveFireInterval = new WaitForSeconds(fireInterval / overdriveFireFactor);
         waitForFireInterval = new WaitForSeconds(fireInterval);
         waitRegenerateHealthTime = new WaitForSeconds(healthRegenerateTime);
+        waitDecelerationTime = new WaitForSeconds(decelerationTime);
 
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
@@ -232,7 +235,7 @@ public class Player : Character
         }
         /*rigidbody.velocity = Vector2.zero;*/
         moveCoroutine = StartCoroutine(MoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
-        StopCoroutine(nameof(MovePositionLimitedCoroutine));
+        StopCoroutine(nameof(DecelerationCoroutine));
     }
 
 
@@ -287,6 +290,13 @@ public class Player : Character
             yield return null;
         }
     }
+
+    IEnumerator DecelerationCoroutine()
+    {
+        yield return waitDecelerationTime;
+
+        StopCoroutine(nameof(MovePositionLimitedCoroutine));
+    }
     #endregion
 
     #region FIRE
@@ -325,16 +335,16 @@ public class Player : Character
             switch (weaponPower)
             {
                 case 0:
-                    PoolManager.Release(projectile1, muzzleMiddle.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position);
                     break;
                 case 1:
-                    PoolManager.Release(projectile1, muzzleTop.position);
-                    PoolManager.Release(projectile1, muzzleButtom.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleTop.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleButtom.position);
                     break;
                 case 2:
-                    PoolManager.Release(projectile1, muzzleMiddle.position);
-                    PoolManager.Release(projectile2, muzzleTop.position);
-                    PoolManager.Release(projectile3, muzzleButtom.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile2, muzzleTop.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile3, muzzleButtom.position);
                     break;
                 default:
                     break;
