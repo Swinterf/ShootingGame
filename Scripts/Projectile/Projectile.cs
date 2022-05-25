@@ -31,6 +31,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    private protected void SetTarget(GameObject target) => this.target = target;
+    //{
+    //    this.target = target;
+    //}
+
     private protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 

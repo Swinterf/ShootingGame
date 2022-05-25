@@ -45,6 +45,7 @@ public class Player : Character
     [SerializeField] GameObject projectile1;
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject projectile3;
+    [SerializeField] GameObject projectileOverdrive;
 
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleTop;
@@ -325,16 +326,16 @@ public class Player : Character
             switch (weaponPower)
             {
                 case 0:
-                    PoolManager.Release(projectile1, muzzleMiddle.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position);
                     break;
                 case 1:
-                    PoolManager.Release(projectile1, muzzleTop.position);
-                    PoolManager.Release(projectile1, muzzleButtom.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleTop.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleButtom.position);
                     break;
                 case 2:
-                    PoolManager.Release(projectile1, muzzleMiddle.position);
-                    PoolManager.Release(projectile2, muzzleTop.position);
-                    PoolManager.Release(projectile3, muzzleButtom.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile2, muzzleTop.position);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile3, muzzleButtom.position);
                     break;
                 default:
                     break;
