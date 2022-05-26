@@ -34,9 +34,6 @@ public class Player : Character
     /// 物体移动过程中的减速时间
     /// </summary>
     [SerializeField] float decelerationTime = 3f;
-
-    [SerializeField] float paddingX = 0.2f;
-    [SerializeField] float paddingY = 0.2f;
     [SerializeField] float moveRotationAngle = 50f;
 
 
@@ -83,6 +80,11 @@ public class Player : Character
     bool isdodging = false;
     bool isOverdriving = false;
 
+    readonly float timeScaleDuration = 0.5f;
+
+    float paddingX = 0.2f;
+    float paddingY = 0.2f;
+
     float dodgeDuration;
     float currentRoll;
 
@@ -110,6 +112,10 @@ public class Player : Character
         waitForFireInterval = new WaitForSeconds(fireInterval);
         waitRegenerateHealthTime = new WaitForSeconds(healthRegenerateTime);
         waitDecelerationTime = new WaitForSeconds(decelerationTime);
+
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+        paddingX = size.x / 2;
+        paddingY = size.y / 2;
 
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
@@ -185,6 +191,9 @@ public class Player : Character
         //在调用完基类函数后更新玩家独有状态条的状态
         /// 一、更新HUD 血条状态
         stateBar_HUD.UpdateState(health, maxHealth);
+
+        //受伤时进入子弹时间
+        TimeController.Instance.BulletTime(timeScaleDuration);
 
         if (gameObject.activeSelf && regenerateHealth)
         {
@@ -383,6 +392,7 @@ public class Player : Character
 
         //绕X轴旋转
         currentRoll = 0f;   //每次旋转开始之前将当前滚转角重置
+        TimeController.Instance.BulletTime(timeScaleDuration, timeScaleDuration);
 
         //* Method 1
         //
@@ -411,7 +421,7 @@ public class Player : Character
         //* Method 2 分别对缩小和放大使用两次线性插值函数
         //var t1 = 0f;
         //var t2 = 0f;
-        
+
         //while(currentRoll < maxRoll)
         //{
         //    currentRoll += Time.deltaTime * rollSpeed;
@@ -432,7 +442,7 @@ public class Player : Character
         //}
 
         //* Method 3 用贝塞尔曲线得到更加丝滑的曲线
-        while(currentRoll < maxRoll)
+        while (currentRoll < maxRoll)
         {
             currentRoll += Time.deltaTime * rollSpeed;
             transform.rotation = Quaternion.AngleAxis(currentRoll, Vector3.right);
@@ -461,7 +471,7 @@ public class Player : Character
         isOverdriving = true;
         dodgeEneryCost *= overdriveDodgeFactor;
         moveSpeed *= overdriveSpeedFactor;
-
+        TimeController.Instance.BulletTime(timeScaleDuration, timeScaleDuration);
     }
 
     private void OverdriveOff()

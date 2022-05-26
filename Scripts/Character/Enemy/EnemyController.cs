@@ -9,8 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float moveRotationAngle = 25f;
 
-    [SerializeField] float paddingX = 0.2f;
-    [SerializeField] float paddingY = 0.2f;
+
 
 
     [Header("---- FIRE ----")]
@@ -22,12 +21,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float minFireInterval = 0.1f;
     [SerializeField] float maxFireInterval = 0.5f;
 
+    float paddingX;
+    float paddingY;
+
     float maxFramDistance;
+
     WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
     private void Awake()
     {
-        maxFramDistance = moveSpeed * Time.fixedDeltaTime;
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+        paddingX = size.x / 2;
+        paddingY = size.y / 2;
     }
 
     private void OnEnable()
@@ -54,7 +59,7 @@ public class EnemyController : MonoBehaviour
         while (gameObject.activeSelf)
         {
             // if not arrive targetPosition 
-            if (Vector3.Distance(transform.position, targetPosition) >= maxFramDistance) 
+            if (Vector3.Distance(transform.position, targetPosition) >= moveSpeed * Time.fixedDeltaTime) 
             {
                 //keep moving targetPosition
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
