@@ -34,10 +34,13 @@ public class StateBar : MonoBehaviour
 
     private void Awake()
     {
+        if(TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas.worldCamera = Camera.main;
+        }
+
         waitForDelayFill = new WaitForSeconds(fillDelay);
 
-        canvas = GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
     }
 
     private void OnDisable()
