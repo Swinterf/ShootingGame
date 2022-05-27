@@ -11,8 +11,9 @@ public class SceneLoader : PersistenSingleten<SceneLoader>
     Color color;
 
     const string GAMEPLAY = "GamePlay";
+    const string MAIN_MENU = "MainMenu";
 
-    IEnumerator LoadCoroutine(string sceneName)
+    IEnumerator LoadingCoroutine(string sceneName)
     {
         //Load new scene in background
         var loadingOperation = SceneManager.LoadSceneAsync(sceneName);
@@ -29,6 +30,9 @@ public class SceneLoader : PersistenSingleten<SceneLoader>
 
             yield return null;
         }
+
+        //挂起等待直到场景加载好了
+        yield return new WaitUntil(() => loadingOperation.progress >= 0.9f);
 
         //Active the new scene
         loadingOperation.allowSceneActivation = true;
@@ -47,6 +51,13 @@ public class SceneLoader : PersistenSingleten<SceneLoader>
 
     public void LoadGamePlayScene()
     {
-        StartCoroutine(LoadCoroutine(GAMEPLAY));
+        StopAllCoroutines();    //防止频繁的加载场景从而导致携程的冲突，在启用新携程前需要先禁用携程
+        StartCoroutine(LoadingCoroutine(GAMEPLAY));
+    }
+
+    public void LoadMainMenuScene()
+    {
+        StopAllCoroutines();    //防止频繁的加载场景从而导致携程的冲突，在启用新携程前需要先禁用携程
+        StartCoroutine(LoadingCoroutine(MAIN_MENU));
     }
 }

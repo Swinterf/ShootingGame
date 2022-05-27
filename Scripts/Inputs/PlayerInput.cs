@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "Player Input")]
-public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
+public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions,InputActions.IPauseMenuActions
 {
     public event UnityAction<Vector2> onMove = delegate { };     //对时间赋一个空值委托，来确保之后在调用的时候不用做非空判断
     public event UnityAction onStop = delegate { };
@@ -17,6 +17,9 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
 
     public event UnityAction onOverdrive = delegate { };
     //public event UnityAction onStopDodge = delegate { };
+    public event UnityAction onPause = delegate { };
+
+    public event UnityAction onUnpause = delegate { };
 
     InputActions inputActions;
 
@@ -26,6 +29,7 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
 
         //每次添加一个新的动作表都要来添加一次他的回调函数
         inputActions.GamePlay.SetCallbacks(this);
+        inputActions.PauseMenu.SetCallbacks(this);
     }
 
     private void OnDisable()
@@ -33,26 +37,37 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
         DisableAllInputs();
     }
 
+    private void SwitchActionMap(InputActionMap actionMap, bool isUIInput)
+    {
+        inputActions.Disable();
+        actionMap.Enable();
+
+        if (isUIInput)
+        {
+            Cursor.visible = true;      
+            Cursor.lockState = CursorLockMode.None;      
+        }
+        else
+        {
+            Cursor.visible = false;      
+            Cursor.lockState = CursorLockMode.Locked;     
+        }
+    }
+
+    public void SwitchToDynamicUpdateMode() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
+    public void SwitchToFixedUpdateMode() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
+
     /// <summary>
     /// 将全部的动作表禁用
     /// </summary>
-    public void DisableAllInputs()
-    {
-        inputActions.GamePlay.Disable();
-    }
+    public void DisableAllInputs() => inputActions.Disable();
+
     /// <summary>
     /// 实现玩家动作表的启用
     /// </summary>
-    public void EnableGamePlayInput()
-    {
-        //启用GamePlaye动作表
-        inputActions.GamePlay.Enable();
+    public void EnableGamePlayInput() => SwitchActionMap(inputActions.GamePlay, false);
 
-        //设置鼠标状态
-        Cursor.visible = false;      //将鼠标显示为不可见
-        Cursor.lockState = CursorLockMode.Locked;      //将鼠标设置为锁定状态
-
-    }
+    public void EnablePauseMenuInput() => SwitchActionMap(inputActions.PauseMenu, true);
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -97,6 +112,22 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions
         if (context.performed)
         {
             onOverdrive.Invoke();
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            onPause.Invoke();
+        }
+    }
+
+    public void OnUnpause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            onUnpause.Invoke();
         }
     }
 }

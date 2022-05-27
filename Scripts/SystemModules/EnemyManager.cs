@@ -61,7 +61,6 @@ public class EnemyManager : Singleten<EnemyManager>
     {
         while (isSpawnEnemy)
         {
-            yield return waitUntilNoEnemy;  //当场景中还有敌人时（ enemyList.Count == 0 返回为false时）挂起等待， 反之执行下面的代码
 
             waveUI.SetActive(true);     //当场景中没有敌人时，将waveUI启用
 
@@ -90,6 +89,9 @@ public class EnemyManager : Singleten<EnemyManager>
             yield return waitTiemBetweenSpawns;
 
         }
+
+        yield return waitUntilNoEnemy;  //当场景中还有敌人时（ enemyList.Count == 0 返回为false时）挂起等待， 反之执行下面的代码
+
         //当一波敌人全部生成完之后让敌人波数(waveNumber)加一
         waveNumber++;
     }
