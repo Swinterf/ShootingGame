@@ -18,6 +18,12 @@ public class GamePlayUIController : MonoBehaviour
     [SerializeField] Button optionButton;
     [SerializeField] Button mainMenuButton;
 
+    [Header("---- AUDIO DATA ----")]
+    [SerializeField] AudioData pauseSFX;
+    [SerializeField] AudioData unpauseSFX;
+
+    int buttonPressedParameterID = Animator.StringToHash("Pressed");
+
     private void OnEnable()
     {
         playerInput.onPause += Pause;
@@ -33,6 +39,8 @@ public class GamePlayUIController : MonoBehaviour
     {
         playerInput.onPause -= Pause;
         playerInput.onUnpause -= Unpause;
+
+        ButtonPressedBehaviour.buttonFunctionTable.Clear();     //在切换场景时清空字典
     }
 
     private void Pause()
@@ -44,12 +52,14 @@ public class GamePlayUIController : MonoBehaviour
         playerInput.EnablePauseMenuInput();
         playerInput.SwitchToDynamicUpdateMode();
         UIInput.Instance.SelectUI(resumeButton);    //当暂停菜单一打开就会自动选中resume按钮了
+        AudioManager.Instance.PlayeSFX(pauseSFX);
     }
 
     private void Unpause()
     {
         resumeButton.Select();      //选中resume按钮
-        resumeButton.animator.SetTrigger("Pressed");    //播放preseed动画
+        resumeButton.animator.SetTrigger(buttonPressedParameterID);    //播放preseed动画
+        AudioManager.Instance.PlayeSFX(unpauseSFX);
     }
 
     private void OnResumeButtonClip()
