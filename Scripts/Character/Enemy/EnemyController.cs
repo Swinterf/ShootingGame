@@ -10,8 +10,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float moveRotationAngle = 25f;
 
 
-
-
     [Header("---- FIRE ----")]
 
     [SerializeField] GameObject[] projectiles;
@@ -86,7 +84,9 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minFireInterval, maxFireInterval));
 
-            foreach(var projectile in projectiles)
+            if (GameManager.GameState == GameState.GameOver) yield break;   //yield break ¹Ø¼ü×ÖÍ£Ö¹Ð¯³Ì
+
+            foreach (var projectile in projectiles)
             {
                 PoolManager.Release(projectile, muzzle.position);
             }

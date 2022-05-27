@@ -7,6 +7,15 @@ public class Enemy : Character
     [SerializeField] int scorePoint = 100;
     [SerializeField] int dieEnergyBonus = 3;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<Player>(out Player player))
+        {
+            player.Die();
+            Die();
+        }
+    }
+
     public override void Die()
     {
         //在敌人死后玩家获得得分

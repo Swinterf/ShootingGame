@@ -22,6 +22,7 @@ public class MainMenuUIController : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        GameManager.GameState = GameState.Playing;
     }
 
     void OnStartGameButtonClip()

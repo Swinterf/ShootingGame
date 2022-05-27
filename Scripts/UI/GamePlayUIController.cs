@@ -45,10 +45,11 @@ public class GamePlayUIController : MonoBehaviour
 
     private void Pause()
     {
-        Time.timeScale = 0f;
         waveUICanvas.enabled = false;
         hUDCanvas.enabled = false;
         menuCanvas.enabled = true;
+        GameManager.GameState = GameState.Paused;
+        TimeController.Instance.Pause();
         playerInput.EnablePauseMenuInput();
         playerInput.SwitchToDynamicUpdateMode();
         UIInput.Instance.SelectUI(resumeButton);    //当暂停菜单一打开就会自动选中resume按钮了
@@ -64,10 +65,11 @@ public class GamePlayUIController : MonoBehaviour
 
     private void OnResumeButtonClip()
     {
-        Time.timeScale = 1f;
         waveUICanvas.enabled = true;
         hUDCanvas.enabled = true;
         menuCanvas.enabled = false;
+        GameManager.GameState = GameState.Playing;
+        TimeController.Instance.Unpause();
         playerInput.EnableGamePlayInput();
         playerInput.SwitchToFixedUpdateMode();
     }
