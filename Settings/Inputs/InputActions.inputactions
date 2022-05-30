@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Launch Missile",
+                    "type": "Button",
+                    "id": "980c336c-50d2-462e-bce0-6098825a13d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -231,6 +239,28 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2efa1cc-176b-496f-b9ac-01b017d6643c",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Launch Missile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "866e1db4-6054-481a-82fe-3670da8302e6",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Launch Missile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

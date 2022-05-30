@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] float damage = 1f;
 
-    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] protected float moveSpeed = 10f;
 
     [SerializeField] protected Vector2 moveDirection;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerOverdive : MonoBehaviour
+public class PlayerOverdive : PlayerProjectile
 {
     public static UnityAction on = delegate { };
     public static UnityAction off = delegate { };

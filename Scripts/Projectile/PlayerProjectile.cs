@@ -4,7 +4,7 @@ public class PlayerProjectile : Projectile
 {
     TrailRenderer trail;
 
-    private void Awake()
+    private protected virtual void Awake()
     {
         //由于Trail 组件是挂在子物体上的 因此要用GetComponentInChildren 来获取到它的组件
         trail = GetComponentInChildren<TrailRenderer>();

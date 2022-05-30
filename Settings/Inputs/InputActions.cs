@@ -57,6 +57,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Launch Missile"",
+                    ""type"": ""Button"",
+                    ""id"": ""980c336c-50d2-462e-bce0-6098825a13d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -246,6 +254,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2efa1cc-176b-496f-b9ac-01b017d6643c"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Launch Missile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""866e1db4-6054-481a-82fe-3670da8302e6"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Launch Missile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -308,6 +338,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_GamePlay_Dodge = m_GamePlay.FindAction("Dodge", throwIfNotFound: true);
         m_GamePlay_Overdrive = m_GamePlay.FindAction("Overdrive", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
+        m_GamePlay_LaunchMissile = m_GamePlay.FindAction("Launch Missile", throwIfNotFound: true);
         // PauseMenu
         m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
         m_PauseMenu_Unpause = m_PauseMenu.FindAction("Unpause", throwIfNotFound: true);
@@ -365,6 +396,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Dodge;
     private readonly InputAction m_GamePlay_Overdrive;
     private readonly InputAction m_GamePlay_Pause;
+    private readonly InputAction m_GamePlay_LaunchMissile;
     public struct GamePlayActions
     {
         private @InputActions m_Wrapper;
@@ -374,6 +406,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Dodge => m_Wrapper.m_GamePlay_Dodge;
         public InputAction @Overdrive => m_Wrapper.m_GamePlay_Overdrive;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
+        public InputAction @LaunchMissile => m_Wrapper.m_GamePlay_LaunchMissile;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -398,6 +431,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
+                @LaunchMissile.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnLaunchMissile;
+                @LaunchMissile.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnLaunchMissile;
+                @LaunchMissile.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnLaunchMissile;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -417,6 +453,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @LaunchMissile.started += instance.OnLaunchMissile;
+                @LaunchMissile.performed += instance.OnLaunchMissile;
+                @LaunchMissile.canceled += instance.OnLaunchMissile;
             }
         }
     }
@@ -470,6 +509,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnOverdrive(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnLaunchMissile(InputAction.CallbackContext context);
     }
     public interface IPauseMenuActions
     {

@@ -106,6 +106,8 @@ public class Player : Character
 
     new Collider2D collider;
 
+    MissileSystem missile;
+
     private void Awake()
     {
         waitForOverdriveFireInterval = new WaitForSeconds(fireInterval / overdriveFireFactor);
@@ -119,6 +121,7 @@ public class Player : Character
 
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        missile = GetComponent<MissileSystem>();
 
         dodgeDuration = maxRoll / rollSpeed;
     }
@@ -137,6 +140,8 @@ public class Player : Character
 
         input.onOverdrive += Overdrive;
 
+        input.onLaunchMissile += LaunchMissile;
+
         PlayerOverdive.on += OverdriveOn;
         PlayerOverdive.off += OverdriveOff;
     }
@@ -152,6 +157,8 @@ public class Player : Character
         input.onDodge -= Dodge;
 
         input.onOverdrive -= Overdrive;
+
+        input.onLaunchMissile -= LaunchMissile;
 
         PlayerOverdive.on -= OverdriveOn;
         PlayerOverdive.off -= OverdriveOff;
@@ -484,4 +491,12 @@ public class Player : Character
 
     #endregion
 
+    #region Missile
+
+    private void LaunchMissile()
+    {
+        missile.Launch(muzzleMiddle);
+    }
+
+    #endregion
 }

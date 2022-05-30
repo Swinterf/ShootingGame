@@ -16,10 +16,12 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions,InputA
     public event UnityAction onDodge = delegate { };
 
     public event UnityAction onOverdrive = delegate { };
-    //public event UnityAction onStopDodge = delegate { };
-    public event UnityAction onPause = delegate { };
 
+    public event UnityAction onPause = delegate { };
     public event UnityAction onUnpause = delegate { };
+
+    public event UnityAction onLaunchMissile = delegate { };
+
 
     InputActions inputActions;
 
@@ -128,6 +130,14 @@ public class PlayerInput : ScriptableObject,InputActions.IGamePlayActions,InputA
         if (context.performed)
         {
             onUnpause.Invoke();
+        }
+    }
+
+    public void OnLaunchMissile(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            onLaunchMissile.Invoke();
         }
     }
 }
