@@ -18,7 +18,10 @@ public class PlayerProjectile : Projectile
     private void OnDisable()
     {
         //«Â¿ÌπÏº£
+        if (trail == null) return;
         trail.Clear();
+
+
     }
 
     private protected override void OnCollisionEnter2D(Collision2D collision)

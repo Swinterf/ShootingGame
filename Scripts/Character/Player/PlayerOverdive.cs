@@ -15,7 +15,7 @@ public class PlayerOverdive : PlayerProjectile
     [SerializeField] AudioData onSFX;
     [SerializeField] AudioData offSFX;
 
-    private void Awake()
+    private new void Awake()
     {
         on += On;
         off += Off;

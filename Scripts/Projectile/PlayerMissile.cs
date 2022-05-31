@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerMissile : PlayerProjectileOverdrive
 {
+    [Header("---- EXPLOSION ----")]
+    [SerializeField] AudioData explosionSFX = null;
+    [SerializeField] GameObject explosionVFX = null;
+
+    [SerializeField] LayerMask enemyLayerMask = default;
+
+    [SerializeField] float explosionRadius = 3f;
+    [SerializeField] float explosionDamage = 100f;
+
     [Header("---- SFX ----")]
     [SerializeField] AudioData targetAcquireVoice = null;
 
@@ -23,10 +32,36 @@ public class PlayerMissile : PlayerProjectileOverdrive
     protected override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine(nameof(variableSpeedCoroutine));
+        StartCoroutine(nameof(VariableSpeedCoroutine));
     }
 
-    IEnumerator variableSpeedCoroutine()
+    private protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        //Spawn a explosion VFX
+        PoolManager.Release(explosionVFX, transform.position);
+        //Play a explosion SFX
+        AudioManager.Instance.PlayRandomSFX(explosionSFX);
+        //enemies in explosion take AOE damage
+        var colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, enemyLayerMask);
+
+        foreach(var collider in colliders)
+        {
+            if(collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.TakeDamage(explosionDamage);
+            }
+        }
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
+    IEnumerator VariableSpeedCoroutine()
     {
         moveSpeed = lowSpeed;
 
