@@ -40,19 +40,16 @@ public class Projectile : MonoBehaviour
     private protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        //TryGetComponent<Character> ���� GetCpmponent<Character> ���ĵ����ܸ���
-        if (collision.gameObject.TryGetComponent<Character>(out Character character))   //���ӵ�������Chara ��ʱ
+        if (collision.gameObject.TryGetComponent<Character>(out Character character))   
         {
             character.TakeDamage(damage);
 
-            //var contactPoint = collision.GetContact(0);     //��GetContact ����������ײʱ����ײ��   ������GetContact(0)��ʾ��һ����ײ��
             //PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
             PoolManager.Release(hitVFX,
                 collision.GetContact(0).point,
                 Quaternion.LookRotation(collision.GetContact(0).normal));
-            AudioManager.Instance.PlayRandomSFX(hitSFXs);   //����������Ч
+            AudioManager.Instance.PlayRandomSFX(hitSFXs);   
 
-            //����Ŀ����ӵ����ûص��������׼���ٴα�����
             gameObject.SetActive(false);
         }
     }

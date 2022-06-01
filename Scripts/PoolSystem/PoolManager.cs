@@ -150,5 +150,4 @@ public class PoolManager : MonoBehaviour
         return dictionary[prefab].PreparedObject(position, rotation, localScale);
     }
 
-
 }

@@ -17,7 +17,6 @@ public class StateBar : MonoBehaviour
     protected float targetFillAmount;
     float previousFillAmount;
 
-
     Canvas canvas;
 
     WaitForSeconds waitForDelayFill;

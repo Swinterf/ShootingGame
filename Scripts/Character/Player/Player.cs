@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]     //通过代码来给挂载的物体添加组件
 public class Player : Character
 {
-
+    #region SerializeField FIELD
     [SerializeField] StateBar_HUD stateBar_HUD;
 
     /// <summary>
@@ -76,7 +76,9 @@ public class Player : Character
 
     [SerializeField] float overdriveSpeedFactor = 1.2f;
     [SerializeField] float overdriveFireFactor = 1.2f;
+    #endregion
 
+    #region FIELD
     bool isdodging = false;
     bool isOverdriving = false;
 
@@ -107,6 +109,8 @@ public class Player : Character
     new Collider2D collider;
 
     MissileSystem missile;
+
+    #endregion
 
     private void Awake()
     {
@@ -176,12 +180,6 @@ public class Player : Character
         stateBar_HUD.Initialize(health, maxHealth);     
 
         //TakeDamage(50f);       //用来测试自动回血功能
-    }
-
-    private void Update()
-    {
-        //由于Update 性能消耗过大 改用携程来减少性能消耗
-        //transform.position = Viewport.Instance.PlayerMovablePosition(transform.position);
     }
 
     #region HEALTH
