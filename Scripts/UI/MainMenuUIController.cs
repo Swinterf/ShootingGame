@@ -7,26 +7,51 @@ public class MainMenuUIController : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
 
-    [SerializeField] Button startGameButton;
+    [Header("---- CANVAS ----")]
+    [SerializeField] Canvas mainMenuCanvas;
+    
+    [Header("---- BUTTON ----")]
+    [SerializeField] Button buttonStart;
+    [SerializeField] Button buttonOptions;
+    [SerializeField] Button buttonExit;
+
 
     private void OnEnable()
     {
-        startGameButton.onClick.AddListener(OnStartGameButtonClip);
+        ButtonPressedBehaviour.buttonFunctionTable.Add(buttonStart.gameObject.name, OnButtonStartClip);
+        ButtonPressedBehaviour.buttonFunctionTable.Add(buttonOptions.gameObject.name, OnButtonOptionsClip);
+        ButtonPressedBehaviour.buttonFunctionTable.Add(buttonExit.gameObject.name, OnButtonExitClip);
     }
 
     private void OnDisable()
     {
-        startGameButton.onClick.RemoveAllListeners();
+        ButtonPressedBehaviour.buttonFunctionTable.Clear();
     }
 
     private void Start()
     {
         Time.timeScale = 1;
         GameManager.GameState = GameState.Playing;
+        UIInput.Instance.SelectUI(buttonStart);
     }
 
-    void OnStartGameButtonClip()
+    void OnButtonStartClip()
     {
+        mainMenuCanvas.enabled = false;
         SceneLoader.Instance.LoadGamePlayScene();
+    }
+
+    void OnButtonOptionsClip()
+    {
+        UIInput.Instance.SelectUI(buttonOptions);
+    }
+
+    void OnButtonExitClip()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }
