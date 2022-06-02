@@ -12,6 +12,7 @@ public class SceneLoader : PersistenSingleten<SceneLoader>
 
     const string GAMEPLAY = "GamePlay";
     const string MAIN_MENU = "MainMenu";
+    const string SCORING = "Scoring";
 
     IEnumerator LoadingCoroutine(string sceneName)
     {
@@ -59,5 +60,11 @@ public class SceneLoader : PersistenSingleten<SceneLoader>
     {
         StopAllCoroutines();    //防止频繁的加载场景从而导致携程的冲突，在启用新携程前需要先禁用携程
         StartCoroutine(LoadingCoroutine(MAIN_MENU));
+    }
+
+    public void LoadScoringScene()
+    {
+        StopAllCoroutines();
+        StartCoroutine(LoadingCoroutine(SCORING));
     }
 }

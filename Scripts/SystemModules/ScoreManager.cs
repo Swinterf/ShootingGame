@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScoreManager : PersistenSingleten<ScoreManager>
 {
+    #region SCORE DISPLAY
+    public int Score => score;
     int score;
     int currentScore;
 
@@ -38,4 +40,21 @@ public class ScoreManager : PersistenSingleten<ScoreManager>
         //在分数增加完成后将文本缩小
         ScoreDisplay.ScaleText(Vector3.one);
     }
+    #endregion
+
+    #region HIGH SCORE SYSTEM
+
+    class PlayerScore
+    {
+        public int score;
+        public string playerName;
+
+        public PlayerScore(int score, string playerName)
+        {
+            this.score = score;
+            this.playerName = playerName;
+        }
+    }
+
+    #endregion
 }
