@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "Player Input")]
-public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, InputActions.IPauseMenuActions
+public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, InputActions.IPauseMenuActions, InputActions.IGameOverScreenActions
 {
     public event UnityAction<Vector2> onMove = delegate { };     //对时间赋一个空值委托，来确保之后在调用的时候不用做非空判断
     public event UnityAction onStop = delegate { };
@@ -22,6 +22,9 @@ public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, Inpu
 
     public event UnityAction onLaunchMissile = delegate { };
 
+    public event UnityAction onConfirmGameOver = delegate { };
+
+
 
     InputActions inputActions;
 
@@ -32,6 +35,7 @@ public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, Inpu
         //每次添加一个新的动作表都要来添加一次他的回调函数
         inputActions.GamePlay.SetCallbacks(this);
         inputActions.PauseMenu.SetCallbacks(this);
+        inputActions.GameOverScreen.SetCallbacks(this);
     }
 
     private void OnDisable()
@@ -70,6 +74,8 @@ public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, Inpu
     public void EnableGamePlayInput() => SwitchActionMap(inputActions.GamePlay, false);
 
     public void EnablePauseMenuInput() => SwitchActionMap(inputActions.PauseMenu, true);
+
+    public void EnableGameOverScreenInput() => SwitchActionMap(inputActions.GameOverScreen, false);
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -138,6 +144,14 @@ public class PlayerInput : ScriptableObject, InputActions.IGamePlayActions, Inpu
         if (context.performed)
         {
             onLaunchMissile.Invoke();
+        }
+    }
+
+    public void OnConfirmGameOver(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            onConfirmGameOver.Invoke();
         }
     }
 }
